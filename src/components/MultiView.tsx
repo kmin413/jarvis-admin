@@ -69,7 +69,9 @@ export default function MultiView({ adminUrl, clientUrl }: Props) {
               </a>
             </div>
           </div>
-          <iframe key={leftKey} className="panel-iframe" src={leftUrl} title="Admin View" />
+          <div className="panel-iframe-wrapper">
+            <iframe key={leftKey} className="panel-iframe" src={leftUrl} title="Admin View" />
+          </div>
         </section>
 
         <div className="divider" onMouseDown={onStartDrag} onTouchStart={onStartDrag} />
@@ -88,7 +90,9 @@ export default function MultiView({ adminUrl, clientUrl }: Props) {
               </a>
             </div>
           </div>
-          <iframe key={rightKey} className="panel-iframe" src={rightUrl} title="Client View" />
+          <div className="panel-iframe-wrapper">
+            <iframe key={rightKey} className="panel-iframe" src={rightUrl} title="Client View" />
+          </div>
         </section>
       </div>
     </div>
