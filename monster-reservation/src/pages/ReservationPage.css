@@ -597,42 +597,129 @@
 }
 
 /* 모바일 반응형 */
-@media (max-width: 768px) {
-  .reservation-page { padding: 0; }
-  .page-container { margin: 0; }
-  .reservation-card { border-radius: 0; border: none; min-height: 100vh; }
+@media (max-width: 1024px) {
+  .reservation-page { padding: 0; background: white; }
+  .page-container { margin: 0; max-width: 100%; }
+  .reservation-card { 
+    border-radius: 0; 
+    border: none; 
+    box-shadow: none; 
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+  }
   
-  .hero-section { margin-bottom: 1.5rem; padding: 1rem; }
+  .hero-section { 
+    margin-bottom: 0; 
+    padding: 1.5rem 1rem; 
+    background: white;
+  }
   .hero-section h2 { font-size: 1.8rem; }
   
-  .selection-panel { padding: 1rem; gap: 1rem; flex-direction: column; align-items: stretch; }
-  .mode-selector { justify-content: center; }
+  .selection-panel { 
+    padding: 0.8rem 1rem; 
+    gap: 0.8rem; 
+    flex-direction: column; 
+    align-items: stretch;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .mode-selector { justify-content: center; width: 100%; }
+  .mode-selector button { flex: 1; justify-content: center; }
   .region-selector select { width: 100%; text-align: center; }
 
   /* 숨김 처리 */
   .hidden-on-mobile { display: none !important; }
 
+  /* Main View */
+  .main-view { flex: 1; overflow: visible; display: block; }
+
   /* Date Mode */
-  .date-mode-view { flex-direction: column; padding: 1rem; gap: 1rem; }
+  .date-mode-view { flex-direction: column; padding: 1rem; gap: 2rem; }
   .calendar-section { flex: auto; width: 100%; }
-  .theme-grid { grid-template-columns: 1fr; }
+  .theme-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 
   /* Theme Mode */
-  .theme-mode-view { position: relative; }
+  .theme-mode-view { 
+    display: block; 
+    height: auto; 
+    min-height: calc(100vh - 150px);
+  }
   
-  .theme-list-sidebar { width: 100%; border-right: none; height: 100%; }
-  .theme-detail-container { width: 100%; height: 100%; display: none; } /* 기본 숨김 */
+  .theme-list-sidebar { 
+    width: 100%; 
+    border-right: none; 
+    height: auto; 
+    background: white;
+  }
+  
+  .theme-list {
+    padding: 0 1rem 2rem 1rem;
+    overflow: visible;
+  }
+
+  .theme-list-item {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    background: white;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  
+  .theme-list-item:hover {
+    background: #f8fafc;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* 상세 페이지 컨테이너 (모바일 전체 화면 오버레이) */
+  .theme-detail-container { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 100;
+    display: none; /* 기본 숨김 */
+    flex-direction: column;
+    overflow-y: auto;
+  } 
 
   /* 모바일 상세 열림 상태 */
   .mobile-detail-open .theme-list-sidebar { display: none; }
-  .mobile-detail-open .theme-detail-container { display: block; }
+  .mobile-detail-open .theme-detail-container { display: flex; }
   
   /* 상세 페이지 스타일 조정 */
-  .mobile-back-header { display: flex; }
-  .theme-hero { height: 200px; padding: 1.5rem; }
-  .theme-hero h2 { font-size: 1.6rem; }
+  .mobile-back-header { 
+    display: flex; 
+    height: 60px;
+    align-items: center;
+    padding: 0 1rem;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 110;
+  }
   
-  .detail-content-wrapper { flex-direction: column; padding: 1.5rem; gap: 2rem; padding-bottom: 100px; }
+  .theme-hero { 
+    height: 240px; 
+    padding: 1.5rem; 
+    display: flex;
+    align-items: flex-end;
+  }
+  .theme-hero h2 { font-size: 1.8rem; }
+  
+  .detail-content-wrapper { 
+    flex-direction: column; 
+    padding: 1.5rem; 
+    gap: 2rem; 
+    padding-bottom: 120px; /* 하단 버튼 공간 확보 */
+  }
   
   .info-grid-box { grid-template-columns: 1fr; }
   
@@ -640,13 +727,29 @@
   .booking-widget { 
     position: fixed; 
     bottom: 0; left: 0; right: 0; 
+    top: auto;
     border-radius: 20px 20px 0 0; 
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.1); 
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15); 
     margin: 0;
-    max-height: 80vh;
+    padding: 1.5rem;
+    max-height: 85vh;
     overflow-y: auto;
-    z-index: 100;
+    z-index: 120;
+    background: white;
+    border: none;
+    border-top: 1px solid #e2e8f0;
   }
+
+  /* 예약 위젯 내부 조정 */
+  .widget-price { display: flex; justify-content: space-between; align-items: center; border: none; margin-bottom: 1rem; padding-bottom: 0; }
+  .widget-calendar { margin-bottom: 1rem; }
   
-  .time-slots-grid { grid-template-columns: repeat(3, 1fr); }
+  .time-slots-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .time-slot-btn { padding: 0.6rem; font-size: 0.9rem; }
+  
+  .btn-book-large {
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+  }
 }

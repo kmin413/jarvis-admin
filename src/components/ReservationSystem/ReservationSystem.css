@@ -716,12 +716,14 @@
 }
 
 /* ==========================================================================
-   모바일 반응형 (max-width: 768px)
+   모바일 반응형 (max-width: 1024px)
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   /* 레이아웃 구조 */
   .reservation-system {
     flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .admin-sidebar {
@@ -729,8 +731,10 @@
     top: 0;
     left: 0;
     bottom: 0;
+    width: 280px;
     transform: translateX(-100%);
     box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    z-index: 200;
   }
 
   .admin-sidebar.open {
@@ -742,19 +746,29 @@
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 15;
+    z-index: 150;
   }
 
   .mobile-menu-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
   }
 
   .admin-header {
     padding: 0 1rem;
+    height: 60px;
+    min-height: 60px;
   }
+  
+  .header-title h2 { font-size: 1.1rem; }
 
   .admin-content {
     padding: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* 대시보드 */
@@ -766,17 +780,28 @@
   /* 테이블 */
   .table-responsive {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
   }
+  
+  .data-table { min-width: 600px; }
 
   /* 캘린더 */
   .admin-calendar-wrapper {
     flex-direction: column !important;
+    height: auto;
+    gap: 1rem;
   }
+  
+  .admin-calendar-container { height: auto; min-height: 400px; }
+  .month-grid { min-height: 300px; }
+  .month-cell { min-height: 80px; }
 
   .schedule-panel {
     width: 100%;
-    margin-top: 1rem;
-    height: 400px;
+    margin-top: 0;
+    height: auto;
+    max-height: 500px;
   }
 
   /* 테마 설정 */
@@ -789,14 +814,21 @@
   }
 
   /* 모달 */
+  .modal-overlay { z-index: 1000; padding: 1rem; align-items: flex-end; }
   .modal-content {
     width: 100%;
-    height: 100%;
-    max-height: 100%;
-    border-radius: 0;
+    height: auto;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    flex-direction: column;
   }
+  
+  .modal-body { overflow-y: auto; flex: 1; }
 
   .form-row {
     grid-template-columns: 1fr;
   }
+  
+  .image-upload-box { aspect-ratio: 16/9; }
 }
