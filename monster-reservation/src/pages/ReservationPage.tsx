@@ -6,7 +6,7 @@
  * - [New] 모바일 최적화 (리스트/상세 네비게이션)
  */
 
-import { useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { MapPin, Calendar as CalendarIcon, Grid, ChevronRight, ChevronLeft, Clock, Users, Star, Info, CheckCircle, DollarSign, ArrowLeft, X } from 'lucide-react'
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns'
 
@@ -39,6 +39,14 @@ interface ThemeDetailData {
   rating: number;
   reviewCount: number;
 }
+
+const EXAMPLE_GALLERY_IMAGES = [
+  'https://picsum.photos/seed/ogam1/1200/900',
+  'https://picsum.photos/seed/ogam2/1200/900',
+  'https://picsum.photos/seed/ogam3/1200/900',
+  'https://picsum.photos/seed/ogam4/1200/900',
+  'https://picsum.photos/seed/ogam5/1200/900',
+]
 
 // 더미 데이터 생성기
 const getThemeDetail = (name: string): ThemeDetailData => {
@@ -105,8 +113,11 @@ export default function ReservationPage() {
   // 모바일 뷰 상태
   const [showMobileDetail, setShowMobileDetail] = useState(false)
   const [isBookingExpanded, setIsBookingExpanded] = useState(false) // 예약 위젯 확장 여부
+  const [galleryIndex, setGalleryIndex] = useState(0)
+  const galleryRef = useRef<HTMLDivElement | null>(null)
   
   const currentThemeData = selectedTheme ? getThemeDetail(selectedTheme) : null
+  const galleryImages = EXAMPLE_GALLERY_IMAGES
 
   const timeSlots = ['10:00', '11:00', '13:00', '14:00', '15:30', '17:00']
 
@@ -229,18 +240,58 @@ export default function ReservationPage() {
                       {/* [Airbnb Style] 모바일 이미지 갤러리 */}
                       <div className="airbnb-image-gallery">
                         <div className="gallery-main">
-                          <img src="https://via.placeholder.com/600x400?text=Main+Image" alt={currentThemeData.name} />
+                          <div
+                            className="gallery-carousel"
+                            ref={galleryRef}
+                            onScroll={() => {
+                              const el = galleryRef.current
+                              if (!el) return
+                              const width = el.clientWidth || 1
+                              const idx = Math.round(el.scrollLeft / width)
+                              setGalleryIndex(Math.max(0, Math.min(idx, galleryImages.length - 1)))
+                            }}
+                          >
+                            {galleryImages.map((src, i) => (
+                              <div key={src} className="gallery-slide">
+                                <img src={src} alt={`${currentThemeData.name} 이미지 ${i + 1}`} />
+                              </div>
+                            ))}
+                          </div>
                           <div className="gallery-badge">BEST</div>
                           <button className="gallery-back-btn" onClick={() => setShowMobileDetail(false)}>
                             <ArrowLeft size={20} />
                           </button>
+                          <div className="gallery-dots" aria-label="이미지 인디케이터">
+                            {galleryImages.map((_, i) => (
+                              <button
+                                key={i}
+                                className={`dot-btn ${i === galleryIndex ? 'active' : ''}`}
+                                onClick={() => {
+                                  const el = galleryRef.current
+                                  if (!el) return
+                                  el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
+                                }}
+                                aria-label={`${i + 1}번 이미지`}
+                              />
+                            ))}
+                          </div>
                         </div>
-                        {/* 더미 이미지들 (실제로는 currentThemeData.images 사용) */}
+                        {/* 썸네일(예제) */}
                         <div className="gallery-thumbnails">
-                          {[1, 2, 3, 4].map(i => (
-                            <div key={i} className="gallery-thumb">
-                              <img src={`https://via.placeholder.com/150x100?text=Img+${i}`} alt={`detail-${i}`} />
-                            </div>
+                          {galleryImages.map((src, i) => (
+                            <button
+                              key={src}
+                              className={`gallery-thumb ${i === galleryIndex ? 'active' : ''}`}
+                              onClick={() => {
+                                const el = galleryRef.current
+                                if (!el) return
+                                el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
+                              }}
+                              aria-label={`${i + 1}번 이미지 보기`}
+                              type="button"
+                            >
+                              <img src={src} alt={`${currentThemeData.name} 썸네일 ${i + 1}`} />
+                            </button>
                           ))}
                         </div>
                       </div>
