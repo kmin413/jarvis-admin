@@ -8,7 +8,7 @@ type Props = {
 }
 
 export default function MultiView({ adminUrl, clientUrl }: Props) {
-  const defaultAdmin = typeof window !== 'undefined' ? window.location.origin : ''
+  const defaultAdmin = 'http://localhost:3000'
   const defaultClient = 'http://localhost:3001'
 
   const leftUrl = useMemo(() => adminUrl || `${defaultAdmin}/?tab=reservation`, [adminUrl, defaultAdmin])
