@@ -10,10 +10,22 @@ import MultiView from './components/MultiView'
 import { storage } from './utils/storage'
 import './App.css'
 
+type Mode = 'assistant' | 'reservation'
 type Tab = 'calendar' | 'todos' | 'notes' | 'commands' | 'settings' | 'reservation' | 'multiview'
 type Layout = 'side' | 'top'
 
 function App() {
+  const [mode, setMode] = useState<Mode>(() => {
+    // URL 파라미터로 모드 지정 가능
+    const params = new URLSearchParams(window.location.search)
+    const modeParam = params.get('mode') as Mode | null
+    if (modeParam && ['assistant', 'reservation'].includes(modeParam)) {
+      return modeParam
+    }
+    // 기본값: 비서 모드
+    return 'assistant'
+  })
+
   const [activeTab, setActiveTab] = useState<Tab>(() => {
     // URL 파라미터로 탭 지정 가능
     const params = new URLSearchParams(window.location.search)
@@ -21,8 +33,8 @@ function App() {
     if (tab && ['calendar', 'todos', 'notes', 'commands', 'settings', 'reservation', 'multiview'].includes(tab)) {
       return tab
     }
-    // 기본값: 통합 뷰
-    return 'multiview'
+    // 기본값: 모드에 따라 다름
+    return mode === 'reservation' ? 'reservation' : 'multiview'
   })
   const [greeting, setGreeting] = useState('')
   const [layout, setLayout] = useState<Layout>('side')
@@ -65,74 +77,101 @@ function App() {
         </div>
       </header>
 
-      <div className="app-body">
-        <nav className="app-nav">
-          <button
-            className={`nav-button ${activeTab === 'commands' ? 'active' : ''}`}
-            onClick={() => setActiveTab('commands')}
-            title="명령 센터"
-          >
-            <Command size={20} />
-            <span>명령</span>
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'reservation' ? 'active' : ''}`}
-            onClick={() => setActiveTab('reservation')}
-            title="오감몬스터 예약"
-          >
-            <Store size={20} />
-            <span>예약 시스템</span>
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'multiview' ? 'active' : ''}`}
-            onClick={() => setActiveTab('multiview')}
-            title="관리자 & 고객 통합 뷰"
-          >
-            <Columns2 size={20} />
-            <span>통합 뷰</span>
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'calendar' ? 'active' : ''}`}
-            onClick={() => setActiveTab('calendar')}
-            title="일정 관리"
-          >
-            <Calendar size={20} />
-            <span>일정</span>
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'todos' ? 'active' : ''}`}
-            onClick={() => setActiveTab('todos')}
-            title="할 일 목록"
-          >
-            <CheckSquare size={20} />
-            <span>할 일</span>
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'notes' ? 'active' : ''}`}
-            onClick={() => setActiveTab('notes')}
-            title="메모"
-          >
-            <FileText size={20} />
-            <span>메모</span>
-          </button>
-          <button
-            className={`nav-button ${activeTab === 'settings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('settings')}
-            title="설정"
-          >
-            <Settings size={20} />
-            <span>설정</span>
-          </button>
-        </nav>
+      {/* 모드 전환 탭 */}
+      <div className="mode-switcher">
+        <button
+          className={`mode-button ${mode === 'assistant' ? 'active' : ''}`}
+          onClick={() => {
+            setMode('assistant')
+            setActiveTab('multiview')
+          }}
+        >
+          <Sparkles size={20} />
+          <span>비서 모드</span>
+        </button>
+        <button
+          className={`mode-button ${mode === 'reservation' ? 'active' : ''}`}
+          onClick={() => {
+            setMode('reservation')
+            setActiveTab('reservation')
+          }}
+        >
+          <Store size={20} />
+          <span>예약 시스템</span>
+        </button>
+      </div>
 
-        <main className={`app-main ${activeTab === 'multiview' ? 'no-padding' : ''}`}>
-          {activeTab === 'commands' && <CommandCenter />}
-          {activeTab === 'reservation' && <ReservationSystem onBack={() => setActiveTab('commands')} />}
-          {activeTab === 'multiview' && <MultiView />}
-          {activeTab === 'calendar' && <CalendarView />}
-          {activeTab === 'todos' && <TodoList />}
-          {activeTab === 'notes' && <Notes />}
-          {activeTab === 'settings' && <SettingsPanel onSettingsChange={handleSettingsChange} />}
+      <div className="app-body">
+        {mode === 'assistant' ? (
+          <nav className="app-nav">
+            <button
+              className={`nav-button ${activeTab === 'multiview' ? 'active' : ''}`}
+              onClick={() => setActiveTab('multiview')}
+              title="관리자 & 고객 통합 뷰"
+            >
+              <Columns2 size={20} />
+              <span>통합 뷰</span>
+            </button>
+            <button
+              className={`nav-button ${activeTab === 'commands' ? 'active' : ''}`}
+              onClick={() => setActiveTab('commands')}
+              title="명령 센터"
+            >
+              <Command size={20} />
+              <span>명령</span>
+            </button>
+            <button
+              className={`nav-button ${activeTab === 'calendar' ? 'active' : ''}`}
+              onClick={() => setActiveTab('calendar')}
+              title="일정 관리"
+            >
+              <Calendar size={20} />
+              <span>일정</span>
+            </button>
+            <button
+              className={`nav-button ${activeTab === 'todos' ? 'active' : ''}`}
+              onClick={() => setActiveTab('todos')}
+              title="할 일 목록"
+            >
+              <CheckSquare size={20} />
+              <span>할 일</span>
+            </button>
+            <button
+              className={`nav-button ${activeTab === 'notes' ? 'active' : ''}`}
+              onClick={() => setActiveTab('notes')}
+              title="메모"
+            >
+              <FileText size={20} />
+              <span>메모</span>
+            </button>
+            <button
+              className={`nav-button ${activeTab === 'settings' ? 'active' : ''}`}
+              onClick={() => setActiveTab('settings')}
+              title="설정"
+            >
+              <Settings size={20} />
+              <span>설정</span>
+            </button>
+          </nav>
+        ) : (
+          <nav className="app-nav reservation-nav">
+            <div className="nav-section-label">예약 시스템 관리</div>
+          </nav>
+        )}
+
+        <main className={`app-main ${activeTab === 'multiview' || mode === 'reservation' ? 'no-padding' : ''}`}>
+          {mode === 'reservation' ? (
+            <ReservationSystem onBack={() => setMode('assistant')} />
+          ) : (
+            <>
+              {activeTab === 'commands' && <CommandCenter />}
+              {activeTab === 'multiview' && <MultiView />}
+              {activeTab === 'calendar' && <CalendarView />}
+              {activeTab === 'todos' && <TodoList />}
+              {activeTab === 'notes' && <Notes />}
+              {activeTab === 'settings' && <SettingsPanel onSettingsChange={handleSettingsChange} />}
+            </>
+          )}
         </main>
       </div>
     </div>
