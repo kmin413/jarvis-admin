@@ -225,88 +225,117 @@ export default function ReservationPage() {
 
                   {currentThemeData ? (
                     <>
-                      {/* Hero Section */}
-                      <div className="theme-hero">
-                        <div className="hero-overlay" />
-                        <div className="theme-hero-content">
-                          <span className="hero-badge">BEST CHOICE</span>
-                          <h2>{currentThemeData.name}</h2>
-                          <div className="theme-meta-row">
-                            <div className="meta-item">
-                              <Star size={16} fill="#f59e0b" color="#f59e0b" />
-                              <span>{currentThemeData.rating} ({currentThemeData.reviewCount} 리뷰)</span>
+                      {/* [Airbnb Style] 모바일 이미지 갤러리 */}
+                      <div className="airbnb-image-gallery">
+                        <div className="gallery-main">
+                          <img src="https://via.placeholder.com/600x400?text=Main+Image" alt={currentThemeData.name} />
+                          <div className="gallery-badge">BEST</div>
+                          <button className="gallery-back-btn" onClick={() => setShowMobileDetail(false)}>
+                            <ArrowLeft size={20} />
+                          </button>
+                        </div>
+                        {/* 더미 이미지들 (실제로는 currentThemeData.images 사용) */}
+                        <div className="gallery-thumbnails">
+                          {[1, 2, 3, 4].map(i => (
+                            <div key={i} className="gallery-thumb">
+                              <img src={`https://via.placeholder.com/150x100?text=Img+${i}`} alt={`detail-${i}`} />
                             </div>
-                            <div className="meta-item">
-                              <MapPin size={16} />
-                              <span>{region} 강남점</span>
-                            </div>
-                          </div>
+                          ))}
                         </div>
                       </div>
 
-                      {/* 상세 정보 & 예약 위젯 레이아웃 */}
-                      <div className="detail-content-wrapper">
-                        {/* 상세 정보 (좌측) */}
-                        <div className="detail-left">
-                          <div className="tags-container" style={{marginBottom: '2rem'}}>
-                            {currentThemeData.tags.map(tag => (
-                              <span key={tag} className="tag-chip">#{tag}</span>
-                            ))}
+                      <div className="detail-content-wrapper airbnb-layout">
+                        {/* [Airbnb Style] 헤더 정보 */}
+                        <div className="airbnb-header">
+                          <h2>{currentThemeData.name}</h2>
+                          <div className="airbnb-meta">
+                            <span>★ {currentThemeData.rating}</span>
+                            <span className="dot">·</span>
+                            <span className="underline">후기 {currentThemeData.reviewCount}개</span>
+                            <span className="dot">·</span>
+                            <span className="underline">{region} 강남점</span>
                           </div>
+                        </div>
 
-                          <div className="info-section">
-                            <h4 className="section-title"><Info size={20} /> 테마 소개</h4>
-                            <p className="info-text">{currentThemeData.description}</p>
+                        <div className="divider"></div>
+
+                        {/* [Airbnb Style] 호스트/테마 정보 */}
+                        <div className="airbnb-host-info">
+                          <div className="host-text">
+                            <h3>오감몬스터님이 호스팅하는 키즈 체험</h3>
+                            <p>최대 8명 · 50분 소요 · {currentThemeData.age}</p>
                           </div>
+                          <div className="host-avatar"></div>
+                        </div>
 
-                          <div className="info-section">
-                            <h4 className="section-title"><CheckCircle size={20} /> 상세 정보</h4>
-                            <div className="info-grid-box">
-                              <div className="meta-item"><Clock size={18} /> 소요 시간: {currentThemeData.duration}</div>
-                              <div className="meta-item"><Users size={18} /> 권장 연령: {currentThemeData.age}</div>
-                              <div className="meta-item"><CheckCircle size={18} /> 준비물: 없음</div>
-                              <div className="meta-item"><CheckCircle size={18} /> 주차: 2시간 무료</div>
+                        <div className="divider"></div>
+
+                        {/* [Airbnb Style] 특징 아이콘 리스트 */}
+                        <div className="airbnb-features">
+                          <div className="feature-item">
+                            <CheckCircle size={24} className="feature-icon" />
+                            <div>
+                              <h4>안전한 체험</h4>
+                              <p>전문 강사진이 아이들의 안전을 책임집니다.</p>
+                            </div>
+                          </div>
+                          <div className="feature-item">
+                            <Clock size={24} className="feature-icon" />
+                            <div>
+                              <h4>50분 프로그램</h4>
+                              <p>아이들의 집중력에 맞춘 최적의 시간입니다.</p>
+                            </div>
+                          </div>
+                          <div className="feature-item">
+                            <MapPin size={24} className="feature-icon" />
+                            <div>
+                              <h4>무료 주차 지원</h4>
+                              <p>건물 내 2시간 무료 주차가 가능합니다.</p>
                             </div>
                           </div>
                         </div>
 
-                          {/* 예약 위젯 (우측 Sticky) */}
-                        <div className={`detail-right booking-widget-wrapper ${isBookingExpanded ? 'expanded' : 'collapsed'}`}>
-                          {/* 모바일 접기/펼치기 핸들 (모바일 전용) */}
-                          <div className="mobile-widget-handle" onClick={() => setIsBookingExpanded(!isBookingExpanded)}>
-                            <div className="handle-bar"></div>
-                          </div>
+                        <div className="divider"></div>
 
-                          <div className="booking-widget">
-                            <div className="widget-price">
-                              <div>
-                                <span className="price-label">1인 체험권</span>
-                                <div>
-                                  <span className="price-value">{currentThemeData.price.toLocaleString()}</span>
-                                  <span className="price-unit">원</span>
-                                </div>
-                              </div>
-                              {/* 모바일에서만 보이는 예약하기 버튼 (접힌 상태) */}
-                              <button 
-                                className="btn-mobile-expand"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setIsBookingExpanded(true);
-                                }}
-                              >
-                                예약하기
-                              </button>
-                            </div>
+                        {/* 상세 설명 */}
+                        <div className="airbnb-description">
+                           <h3>프로그램 소개</h3>
+                           <p>{currentThemeData.description}</p>
+                           <div className="airbnb-tags">
+                             {currentThemeData.tags.map(tag => (
+                               <span key={tag}>#{tag}</span>
+                             ))}
+                           </div>
+                        </div>
 
-                            <div className="widget-content-scroll">
-                              <div className="widget-calendar">
-                                <h5 style={{marginBottom:'0.5rem', fontWeight:600}}>날짜 선택</h5>
-                                <SimpleCalendar selectedDate={themeDate} onSelectDate={setThemeDate} />
-                              </div>
+                        {/* [Airbnb Style] 하단 고정 예약 바 (Sticky Footer) */}
+                        <div className={`airbnb-bottom-bar ${isBookingExpanded ? 'expanded' : ''}`}>
+                           <div className="bottom-bar-content">
+                             <div className="price-info">
+                               <span className="price-val">{currentThemeData.price.toLocaleString()}원</span>
+                               <span className="price-suffix"> / 1인</span>
+                               <div className="date-preview">
+                                 {selectedTime ? `${format(themeDate, 'M월 d일')} ${selectedTime}` : '날짜를 선택하세요'}
+                               </div>
+                             </div>
+                             <button className="btn-airbnb-reserve" onClick={() => setIsBookingExpanded(true)}>
+                               예약하기
+                             </button>
+                           </div>
 
-                              <div className="widget-time">
-                                <h5 style={{marginBottom:'0.5rem', fontWeight:600}}>시간 선택 ({format(themeDate, 'M/d')})</h5>
-                                <div className="time-slots-grid">
+                           {/* 확장된 예약 폼 (달력/시간 선택) */}
+                           <div className="airbnb-booking-form">
+                             <div className="form-header">
+                               <h3>날짜와 시간 선택</h3>
+                               <button onClick={() => setIsBookingExpanded(false)}><X size={24} /></button>
+                             </div>
+                             
+                             <div className="form-body">
+                               <div className="section-label">날짜</div>
+                               <SimpleCalendar selectedDate={themeDate} onSelectDate={setThemeDate} />
+                               
+                               <div className="section-label" style={{marginTop: '1.5rem'}}>시간</div>
+                               <div className="time-slots-grid">
                                   {timeSlots.map(time => (
                                     <button 
                                       key={time}
@@ -316,19 +345,25 @@ export default function ReservationPage() {
                                       {time}
                                     </button>
                                   ))}
-                                </div>
-                              </div>
+                               </div>
+                             </div>
 
-                              <button 
-                                className="btn-book-large"
-                                onClick={() => alert(`${currentThemeData.name}\n${format(themeDate, 'yyyy-MM-dd')} ${selectedTime}\n예약이 접수되었습니다!`)}
-                                disabled={!selectedTime}
-                              >
-                                {selectedTime ? '예약 확정하기' : '시간을 선택해주세요'}
-                              </button>
-                            </div>
-                          </div>
+                             <div className="form-footer">
+                               <button 
+                                 className="btn-book-final"
+                                 onClick={() => {
+                                   if(!selectedTime) return;
+                                   alert('예약이 완료되었습니다!');
+                                   setIsBookingExpanded(false);
+                                 }}
+                                 disabled={!selectedTime}
+                               >
+                                 확인
+                               </button>
+                             </div>
+                           </div>
                         </div>
+
                       </div>
                     </>
                   ) : (
