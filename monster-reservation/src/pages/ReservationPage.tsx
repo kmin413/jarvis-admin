@@ -309,10 +309,10 @@ export default function ReservationPage() {
                            </div>
                         </div>
 
-                        {/* [Airbnb Style] 하단 고정 예약 바 (Sticky Footer) */}
+                          {/* [Airbnb Style] 하단 고정 예약 바 (Sticky Footer) */}
                         <div className={`airbnb-bottom-bar ${isBookingExpanded ? 'expanded' : ''}`}>
                            <div className="bottom-bar-content">
-                             <div className="price-info">
+                             <div className="price-info" onClick={() => setIsBookingExpanded(true)}>
                                <span className="price-val">{currentThemeData.price.toLocaleString()}원</span>
                                <span className="price-suffix"> / 1인</span>
                                <div className="date-preview">
