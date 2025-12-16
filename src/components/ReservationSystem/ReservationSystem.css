@@ -798,13 +798,20 @@
   
   .month-grid { 
     min-height: auto;
-    grid-template-rows: 30px repeat(5, minmax(60px, auto)); /* 행 높이 축소 */
+    /* Grid 깨짐 방지: 1fr 대신 minmax(0, 1fr) 사용 및 width 100% 명시 */
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr)); 
+    grid-template-rows: 30px repeat(5, minmax(50px, auto));
     border-right: none;
+    width: 100%;
+    max-width: 100vw; /* 화면 너비 초과 방지 */
+    box-sizing: border-box; /* 패딩 포함 계산 */
   }
   
   .month-cell { 
-    min-height: 60px; 
+    min-height: 50px; 
     padding: 2px;
+    overflow: hidden; /* 내용 넘침 방지 */
   }
 
   .date-label { font-size: 0.8rem; }
