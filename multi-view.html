@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오감몬스터 - 통합 뷰 (관리자 & 고객)</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #0f172a;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        .view-panel {
+            flex: 1;
+            height: 100%;
+            border-right: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .view-panel:last-child {
+            border-right: none;
+        }
+        .panel-header {
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            font-size: 14px;
+        }
+        .badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .badge-admin { background: #6366f1; color: white; }
+        .badge-client { background: #10b981; color: white; }
+        
+        .iframe-container {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+        .refresh-btn {
+            background: transparent;
+            border: 1px solid #475569;
+            color: #94a3b8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .refresh-btn:hover {
+            background: #334155;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 관리자 화면 -->
+        <div class="view-panel">
+            <div class="panel-header">
+                <div style="display:flex; align-items:center">
+                    <span>자비스 AI 관리자</span>
+                    <span class="badge badge-admin">Admin</span>
+                </div>
+                <button class="refresh-btn" onclick="document.getElementById('frame-admin').src = document.getElementById('frame-admin').src">새로고침</button>
+            </div>
+            <iframe id="frame-admin" src="http://localhost:3000" class="iframe-container"></iframe>
+        </div>
+        
+        <!-- 고객 예약 화면 -->
+        <div class="view-panel">
+            <div class="panel-header">
+                <div style="display:flex; align-items:center">
+                    <span>오감몬스터 예약 (고객용)</span>
+                    <span class="badge badge-client">Client</span>
+                </div>
+                <button class="refresh-btn" onclick="document.getElementById('frame-client').src = document.getElementById('frame-client').src">새로고침</button>
+            </div>
+            <!-- 고객용 앱은 3001번 포트에서 실행 중 -->
+            <iframe id="frame-client" src="http://localhost:3001" class="iframe-container"></iframe>
+        </div>
+    </div>
+</body>
+</html>

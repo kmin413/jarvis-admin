@@ -1,0 +1,166 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.app-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  padding: 2rem;
+  box-shadow: 0 4px 6px var(--shadow);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  color: white;
+}
+
+.logo-section h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.greeting {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+/* 기본 사이드바 레이아웃 */
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  border-bottom: none;
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.nav-button:hover {
+  background: var(--surface-light);
+  color: var(--text);
+  transform: translateX(4px);
+}
+
+.nav-button.active {
+  background: var(--primary);
+  color: white;
+  font-weight: 500;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  width: 100%;
+  background-color: #f8fafc;
+}
+
+/* 상단 메뉴 레이아웃 (layout-top) */
+.layout-top .app-body {
+  flex-direction: column;
+}
+
+.layout-top .app-nav {
+  flex-direction: row;
+  width: 100%;
+  border-right: none;
+  border-bottom: 1px solid var(--border);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.layout-top .nav-button {
+  width: auto;
+  padding: 0.75rem 1.5rem;
+  justify-content: center;
+}
+
+.layout-top .nav-button:hover {
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .app-body {
+    flex-direction: column;
+  }
+  
+  .app-header {
+    padding: 1.5rem;
+  }
+
+  .logo-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .app-nav {
+    flex-direction: row;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .nav-button {
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    justify-content: center;
+  }
+  
+  .nav-button:hover {
+    transform: none;
+  }
+
+  .nav-button span {
+    display: none;
+  }
+
+  .app-main {
+    padding: 1rem;
+  }
+}
