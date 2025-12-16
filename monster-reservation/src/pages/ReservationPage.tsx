@@ -103,6 +103,7 @@ export default function ReservationPage() {
   
   // 모바일 뷰 상태
   const [showMobileDetail, setShowMobileDetail] = useState(false)
+  const [isBookingExpanded, setIsBookingExpanded] = useState(false) // 예약 위젯 확장 여부
   
   const currentThemeData = selectedTheme ? getThemeDetail(selectedTheme) : null
 
@@ -269,42 +270,63 @@ export default function ReservationPage() {
                           </div>
                         </div>
 
-                        {/* 예약 위젯 (우측 Sticky) */}
-                        <div className="detail-right">
+                          {/* 예약 위젯 (우측 Sticky) */}
+                        <div className={`detail-right booking-widget-wrapper ${isBookingExpanded ? 'expanded' : 'collapsed'}`}>
+                          {/* 모바일 접기/펼치기 핸들 (모바일 전용) */}
+                          <div className="mobile-widget-handle" onClick={() => setIsBookingExpanded(!isBookingExpanded)}>
+                            <div className="handle-bar"></div>
+                          </div>
+
                           <div className="booking-widget">
                             <div className="widget-price">
-                              <span className="price-label">1인 체험권</span>
-                              <span className="price-value">{currentThemeData.price.toLocaleString()}</span>
-                              <span className="price-unit">원</span>
-                            </div>
-
-                            <div className="widget-calendar">
-                              <h5 style={{marginBottom:'0.5rem', fontWeight:600}}>날짜 선택</h5>
-                              <SimpleCalendar selectedDate={themeDate} onSelectDate={setThemeDate} />
-                            </div>
-
-                            <div className="widget-time">
-                              <h5 style={{marginBottom:'0.5rem', fontWeight:600}}>시간 선택 ({format(themeDate, 'M/d')})</h5>
-                              <div className="time-slots-grid">
-                                {timeSlots.map(time => (
-                                  <button 
-                                    key={time}
-                                    className={`time-slot-btn ${selectedTime === time ? 'selected' : ''}`}
-                                    onClick={() => setSelectedTime(time)}
-                                  >
-                                    {time}
-                                  </button>
-                                ))}
+                              <div>
+                                <span className="price-label">1인 체험권</span>
+                                <div>
+                                  <span className="price-value">{currentThemeData.price.toLocaleString()}</span>
+                                  <span className="price-unit">원</span>
+                                </div>
                               </div>
+                              {/* 모바일에서만 보이는 예약하기 버튼 (접힌 상태) */}
+                              <button 
+                                className="btn-mobile-expand"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsBookingExpanded(true);
+                                }}
+                              >
+                                예약하기
+                              </button>
                             </div>
 
-                            <button 
-                              className="btn-book-large"
-                              onClick={() => alert(`${currentThemeData.name}\n${format(themeDate, 'yyyy-MM-dd')} ${selectedTime}\n예약이 접수되었습니다!`)}
-                              disabled={!selectedTime}
-                            >
-                              {selectedTime ? '예약하기' : '시간을 선택해주세요'}
-                            </button>
+                            <div className="widget-content-scroll">
+                              <div className="widget-calendar">
+                                <h5 style={{marginBottom:'0.5rem', fontWeight:600}}>날짜 선택</h5>
+                                <SimpleCalendar selectedDate={themeDate} onSelectDate={setThemeDate} />
+                              </div>
+
+                              <div className="widget-time">
+                                <h5 style={{marginBottom:'0.5rem', fontWeight:600}}>시간 선택 ({format(themeDate, 'M/d')})</h5>
+                                <div className="time-slots-grid">
+                                  {timeSlots.map(time => (
+                                    <button 
+                                      key={time}
+                                      className={`time-slot-btn ${selectedTime === time ? 'selected' : ''}`}
+                                      onClick={() => setSelectedTime(time)}
+                                    >
+                                      {time}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <button 
+                                className="btn-book-large"
+                                onClick={() => alert(`${currentThemeData.name}\n${format(themeDate, 'yyyy-MM-dd')} ${selectedTime}\n예약이 접수되었습니다!`)}
+                                disabled={!selectedTime}
+                              >
+                                {selectedTime ? '예약 확정하기' : '시간을 선택해주세요'}
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
