@@ -1,19 +1,29 @@
 import { useState, useEffect } from 'react'
-import { Calendar, CheckSquare, FileText, Settings, Command, Sparkles, Store } from 'lucide-react'
+import { Calendar, CheckSquare, FileText, Settings, Command, Sparkles, Store, Columns2 } from 'lucide-react'
 import CalendarView from './components/CalendarView'
 import TodoList from './components/TodoList'
 import Notes from './components/Notes'
 import CommandCenter from './components/CommandCenter'
 import SettingsPanel from './components/SettingsPanel'
 import ReservationSystem from './components/ReservationSystem/ReservationSystem'
+import MultiView from './components/MultiView'
 import { storage } from './utils/storage'
 import './App.css'
 
-type Tab = 'calendar' | 'todos' | 'notes' | 'commands' | 'settings' | 'reservation'
+type Tab = 'calendar' | 'todos' | 'notes' | 'commands' | 'settings' | 'reservation' | 'multiview'
 type Layout = 'side' | 'top'
 
 function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('commands')
+  const [activeTab, setActiveTab] = useState<Tab>(() => {
+    // URL 파라미터로 탭 지정 가능
+    const params = new URLSearchParams(window.location.search)
+    const tab = params.get('tab') as Tab | null
+    if (tab && ['calendar', 'todos', 'notes', 'commands', 'settings', 'reservation', 'multiview'].includes(tab)) {
+      return tab
+    }
+    // 기본값: 통합 뷰
+    return 'multiview'
+  })
   const [greeting, setGreeting] = useState('')
   const [layout, setLayout] = useState<Layout>('side')
 
@@ -74,6 +84,14 @@ function App() {
             <span>예약 시스템</span>
           </button>
           <button
+            className={`nav-button ${activeTab === 'multiview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('multiview')}
+            title="관리자 & 고객 통합 뷰"
+          >
+            <Columns2 size={20} />
+            <span>통합 뷰</span>
+          </button>
+          <button
             className={`nav-button ${activeTab === 'calendar' ? 'active' : ''}`}
             onClick={() => setActiveTab('calendar')}
             title="일정 관리"
@@ -107,9 +125,10 @@ function App() {
           </button>
         </nav>
 
-        <main className="app-main">
+        <main className={`app-main ${activeTab === 'multiview' ? 'no-padding' : ''}`}>
           {activeTab === 'commands' && <CommandCenter />}
           {activeTab === 'reservation' && <ReservationSystem onBack={() => setActiveTab('commands')} />}
+          {activeTab === 'multiview' && <MultiView />}
           {activeTab === 'calendar' && <CalendarView />}
           {activeTab === 'todos' && <TodoList />}
           {activeTab === 'notes' && <Notes />}
