@@ -7,8 +7,9 @@
  */
 
 import { useState, useEffect } from 'react'
-import { MapPin, Calendar as CalendarIcon, Grid, ChevronRight, ChevronLeft, Clock, Users, Star, Info, CheckCircle, DollarSign, ArrowLeft } from 'lucide-react'
+import { MapPin, Calendar as CalendarIcon, Grid, ChevronRight, ChevronLeft, Clock, Users, Star, Info, CheckCircle, DollarSign, ArrowLeft, X } from 'lucide-react'
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns'
+
 import { ko } from 'date-fns/locale'
 import './ReservationPage.css'
 
