@@ -24,6 +24,12 @@
   z-index: 100;
 }
 
+/* 레이아웃 깨짐(특히 모바일) 방지를 위해 box-sizing 강제 */
+.reservation-system,
+.reservation-system * {
+  box-sizing: border-box;
+}
+
 /* 사이드바 */
 .admin-sidebar {
   width: 240px;
@@ -305,6 +311,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .month-cell:hover {
@@ -316,7 +323,9 @@
 }
 
 .month-cell.selected {
-  border: 2px solid var(--admin-primary);
+  border: none;
+  outline: 2px solid var(--admin-primary);
+  outline-offset: -2px;
   background: rgba(99, 102, 241, 0.05);
 }
 
@@ -726,6 +735,17 @@
     overflow: hidden;
   }
 
+  /* flex/grid 기본 min-width:auto 때문에 발생하는 오버플로우 체인 차단 */
+  .admin-main,
+  .admin-content,
+  .admin-calendar-wrapper,
+  .admin-calendar-container,
+  .month-grid,
+  .month-cell,
+  .month-cell-header {
+    min-width: 0;
+  }
+
   .admin-sidebar {
     position: fixed;
     top: 0;
@@ -809,6 +829,7 @@
     width: 100%;
     max-width: 100%; /* 100vw는 부모 패딩 때문에 오버플로우 유발 */
     box-sizing: border-box; /* 패딩 포함 계산 */
+    overflow: hidden; /* 그리드 밖으로 내용이 튀는 것 방지 */
   }
   
   .month-cell { 
