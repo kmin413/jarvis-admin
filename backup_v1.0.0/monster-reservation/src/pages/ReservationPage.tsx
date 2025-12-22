@@ -107,7 +107,7 @@ export default function ReservationPage() {
   const [region, setRegion] = useState<Region>('서울')
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [themeDate, setThemeDate] = useState<Date>(new Date())
-  const [selectedTheme, setSelectedTheme] = useState<string | null>(null)
+  const [selectedTheme, setSelectedTheme] = useState<string | null>(THEMES[0])
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   
   // 모바일 뷰 상태
@@ -206,64 +206,37 @@ export default function ReservationPage() {
             ) : (
               // --- 테마별 보기 모드 (모바일 대응) ---
               <div className={`theme-mode-view ${showMobileDetail ? 'mobile-detail-open' : ''}`}>
-                {/* 1. 테마 선택 안됨: 그리드 갤러리 뷰 (초기 화면) */}
-                {!selectedTheme ? (
-                  <div className="theme-gallery-container">
-                    <h2 className="gallery-title">대한민국의 독특한 체험을 만나보세요.</h2>
-                    <div className="theme-gallery-grid">
-                      {THEMES.map((theme, idx) => (
-                        <div key={idx} className="gallery-card" onClick={() => handleThemeSelect(theme)}>
-                          <div className="gallery-card-image" />
-                          <div className="gallery-card-info">
-                            <h3 className="gallery-card-title">체험 프로그램: {theme}</h3>
-                            <p className="gallery-card-location">서울, 대한민국</p>
-                            <p className="gallery-card-price">가격: 35,000원</p>
-                            <div className="gallery-card-rating">★★★★★ {30 + idx % 20}개</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                {/* 왼쪽: 테마 리스트 사이드바 */}
+                <div className="theme-list-sidebar">
+                  <div className="sidebar-header">
+                    <h3>전체 테마 ({THEMES.length})</h3>
                   </div>
-                ) : (
-                  /* 2. 테마 선택됨: 기존 사이드바 + 상세 뷰 */
-                  <>
-                    {/* 왼쪽: 테마 리스트 사이드바 */}
-                    <div className="theme-list-sidebar">
-                      <div className="sidebar-header">
-                        <h3>전체 테마 ({THEMES.length})</h3>
-                        <button className="btn-text" onClick={() => setSelectedTheme(null)} style={{fontSize: '0.9rem'}}>
-                          &larr; 전체 목록으로
-                        </button>
+                  <div className="theme-list">
+                    {THEMES.map((theme, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`theme-list-item ${selectedTheme === theme ? 'active' : ''}`}
+                        onClick={() => handleThemeSelect(theme)}
+                      >
+                        <span>{idx + 1}. {theme}</span>
+                        <ChevronRight size={16} style={{opacity: selectedTheme === theme ? 1 : 0.3}} />
                       </div>
-                      <div className="theme-list">
-                        {THEMES.map((theme, idx) => (
-                          <div 
-                            key={idx} 
-                            className={`theme-list-item ${selectedTheme === theme ? 'active' : ''}`}
-                            onClick={() => handleThemeSelect(theme)}
-                          >
-                            <span>{idx + 1}. {theme}</span>
-                            <ChevronRight size={16} style={{opacity: selectedTheme === theme ? 1 : 0.3}} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* 오른쪽: 테마 상세 페이지 */}
-                    <div className="theme-detail-container">
-                      {/* 모바일 뒤로가기 헤더 */}
-                      <div className="mobile-back-header">
-                        <button onClick={() => {
-                          setShowMobileDetail(false)
-                          setSelectedTheme(null) // 모바일에서 뒤로가기 시 목록으로
-                        }}>
-                          <ArrowLeft size={24} /> 뒤로가기
-                        </button>
-                        <span>테마 상세</span>
-                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* 오른쪽: 테마 상세 페이지 */}
+                <div className="theme-detail-container">
+                  {/* 모바일 뒤로가기 헤더 */}
+                  <div className="mobile-back-header">
+                    <button onClick={() => setShowMobileDetail(false)}>
+                      <ArrowLeft size={24} /> 뒤로가기
+                    </button>
+                    <span>테마 상세</span>
+                  </div>
 
-                      {currentThemeData ? (
-                        <>
+                  {currentThemeData ? (
+                    <>
                       {/* [Airbnb Style] 모바일 이미지 갤러리 */}
                       <div className="airbnb-image-gallery">
                         <div className="gallery-main">
@@ -281,9 +254,9 @@ export default function ReservationPage() {
                             {galleryImages.map((src, i) => (
                               <div key={src} className="gallery-slide">
                                 <img src={src} alt={`${currentThemeData.name} 이미지 ${i + 1}`} />
-                              </div>
+                            </div>
                             ))}
-                          </div>
+                            </div>
                           <div className="gallery-badge">BEST</div>
                           <button className="gallery-back-btn" onClick={() => setShowMobileDetail(false)}>
                             <ArrowLeft size={20} />
@@ -400,47 +373,47 @@ export default function ReservationPage() {
                              <button className="btn-airbnb-reserve" onClick={() => setIsBookingExpanded(true)}>
                                예약하기
                              </button>
-                           </div>
+                            </div>
 
                            {/* 확장된 예약 폼 (달력/시간 선택) */}
                            <div className="airbnb-booking-form">
                              <div className="form-header">
                                <h3>날짜와 시간 선택</h3>
                                <button onClick={() => setIsBookingExpanded(false)}><X size={24} /></button>
-                             </div>
-                             
+                            </div>
+
                              <div className="form-body">
                                <div className="section-label">날짜</div>
                                <SimpleCalendar selectedDate={themeDate} onSelectDate={setThemeDate} />
                                
                                <div className="section-label" style={{marginTop: '1.5rem'}}>시간</div>
-                               <div className="time-slots-grid">
-                                  {timeSlots.map(time => (
-                                    <button 
-                                      key={time}
-                                      className={`time-slot-btn ${selectedTime === time ? 'selected' : ''}`}
-                                      onClick={() => setSelectedTime(time)}
-                                    >
-                                      {time}
-                                    </button>
-                                  ))}
-                               </div>
-                             </div>
+                              <div className="time-slots-grid">
+                                {timeSlots.map(time => (
+                                  <button 
+                                    key={time}
+                                    className={`time-slot-btn ${selectedTime === time ? 'selected' : ''}`}
+                                    onClick={() => setSelectedTime(time)}
+                                  >
+                                    {time}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
 
                              <div className="form-footer">
-                               <button 
+                            <button 
                                  className="btn-book-final"
                                  onClick={() => {
                                    if(!selectedTime) return;
                                    alert('예약이 완료되었습니다!');
                                    setIsBookingExpanded(false);
                                  }}
-                                 disabled={!selectedTime}
-                               >
+                              disabled={!selectedTime}
+                            >
                                  확인
-                               </button>
+                            </button>
                              </div>
-                           </div>
+                          </div>
                         </div>
 
                       </div>
@@ -451,8 +424,6 @@ export default function ReservationPage() {
                     </div>
                   )}
                 </div>
-              </>
-            )}
               </div>
             )}
           </div>

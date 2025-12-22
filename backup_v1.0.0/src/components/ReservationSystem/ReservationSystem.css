@@ -1,0 +1,908 @@
+/* 관리자 모드 전용 스타일 */
+.reservation-system {
+  --admin-bg: #0f172a;
+  --admin-sidebar: #1e293b;
+  --admin-card: #1e293b;
+  --admin-border: #334155;
+  --admin-text: #f8fafc;
+  --admin-text-muted: #94a3b8;
+  --admin-primary: #6366f1;
+  --admin-success: #10b981;
+  --admin-danger: #ef4444;
+  --admin-warning: #f59e0b;
+
+  display: flex !important;
+  width: 100%;
+  height: 100vh;
+  background: var(--admin-bg) !important;
+  color: var(--admin-text) !important;
+  font-family: 'Pretendard', sans-serif;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+/* 레이아웃 깨짐(특히 모바일) 방지를 위해 box-sizing 강제 */
+.reservation-system,
+.reservation-system * {
+  box-sizing: border-box;
+}
+
+/* 사이드바 */
+.admin-sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--admin-sidebar);
+  border-right: 1px solid var(--admin-border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  z-index: 20;
+  transition: transform 0.3s ease;
+}
+
+.admin-logo {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.nav-item:hover, .nav-item.active {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--admin-primary);
+}
+
+.nav-item.active {
+  font-weight: 600;
+}
+
+/* 메인 컨텐츠 */
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--admin-bg);
+  position: relative;
+  width: 100%;
+}
+
+.admin-header {
+  height: 64px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: var(--admin-bg);
+}
+
+.header-title h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--admin-text);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-action {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--admin-border);
+  background: var(--admin-card);
+  color: var(--admin-text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-action.btn-primary {
+  background: var(--admin-primary);
+  border-color: var(--admin-primary);
+  color: white;
+}
+
+.admin-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+/* 대시보드 위젯 */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.2s;
+}
+
+.theme-hidden {
+  border-style: dashed;
+}
+
+.stat-label {
+  color: var(--admin-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.stat-trend {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--admin-text-muted);
+}
+
+.trend-up { color: var(--admin-success); }
+.trend-down { color: var(--admin-danger); }
+
+/* 예약 테이블 */
+.data-table-container {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--admin-text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--admin-border);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.95rem;
+  color: var(--admin-text);
+  white-space: nowrap;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-pending { background: rgba(245, 158, 11, 0.2); color: var(--admin-warning); }
+.status-confirmed { background: rgba(16, 185, 129, 0.2); color: var(--admin-success); }
+.status-cancelled { background: rgba(239, 68, 68, 0.2); color: var(--admin-danger); }
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--admin-border);
+  background: transparent;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover, .btn-icon.active {
+  background: var(--admin-border);
+  color: var(--admin-text);
+}
+
+.btn-icon.active {
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--admin-primary);
+  border-color: var(--admin-primary);
+}
+
+.btn-icon.approve:hover { background: rgba(16, 185, 129, 0.2); color: var(--admin-success); border-color: var(--admin-success); }
+.btn-icon.reject:hover { background: rgba(239, 68, 68, 0.2); color: var(--admin-danger); border-color: var(--admin-danger); }
+
+/* 관리자 캘린더 (월간 뷰) */
+.admin-calendar-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-month-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 40px repeat(5, 1fr); /* 헤더 + 5주 */
+  gap: 1px;
+  background: var(--admin-border);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.month-cell-header {
+  background: var(--admin-sidebar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--admin-text-muted);
+}
+
+.month-cell {
+  background: var(--admin-card);
+  padding: 0.5rem;
+  min-height: 100px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.month-cell:hover {
+  background: #334155;
+}
+
+.month-cell.today {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.month-cell.selected {
+  border: none;
+  outline: 2px solid var(--admin-primary);
+  outline-offset: -2px;
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.date-label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--admin-text);
+}
+
+.date-label.faded {
+  color: var(--admin-text-muted);
+  opacity: 0.5;
+}
+
+/* 예약 뱃지 */
+.res-badge {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #475569;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.res-badge.confirmed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.res-badge.pending {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.more-badge {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+  text-align: center;
+  padding: 2px;
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--admin-text);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* 폼 스타일 */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--admin-text-muted);
+  font-size: 0.9rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  background: #0f172a;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  color: var(--admin-text);
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background: #0f172a;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  color: var(--admin-text);
+  font-family: inherit;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.input-disabled {
+  background: #334155 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* 이미지 업로드 스타일 */
+.image-upload-box {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #0f172a;
+  border: 2px dashed #334155;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.image-upload-box:hover {
+  border-color: var(--admin-primary);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.upload-placeholder {
+  text-align: center;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-images-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.detail-image-item {
+  aspect-ratio: 1;
+  background: #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--admin-border);
+}
+
+.detail-image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-remove-img {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.detail-image-add {
+  aspect-ratio: 1;
+  border: 1px dashed var(--admin-border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+}
+
+.detail-image-add:hover {
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--admin-primary);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-text:disabled {
+  color: var(--admin-text-muted);
+  cursor: not-allowed;
+}
+
+/* 일정 관리 패널 */
+.schedule-panel {
+  width: 320px;
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.schedule-header {
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedule-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--admin-text);
+}
+
+.schedule-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.time-slot-card {
+  background: #0f172a;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.time-slot-card.blocked {
+  opacity: 0.6;
+  border-style: dashed;
+}
+
+.slot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.slot-time {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--admin-text);
+}
+
+.badge-blocked {
+  font-size: 10px;
+  background: var(--admin-danger);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.slot-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.capacity {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.capacity.full {
+  color: var(--admin-danger);
+  font-weight: 600;
+}
+
+.mini-res-item {
+  background: var(--admin-sidebar);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.mini-res-item:hover {
+  background: #334155;
+}
+
+.res-name { font-weight: 500; }
+.res-theme { color: var(--admin-text-muted); font-size: 0.8rem; }
+.res-people { font-size: 0.8rem; color: var(--admin-primary); }
+
+.empty-slot-msg {
+  text-align: center;
+  color: var(--admin-text-muted);
+  font-size: 0.85rem;
+  padding: 1rem;
+}
+
+/* 테마 그리드 */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* 편집 폼 그리드 */
+.edit-form-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+}
+
+/* 모바일 메뉴 버튼 (기본 숨김) */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--admin-text);
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobile-menu-overlay {
+  display: none;
+}
+
+/* ==========================================================================
+   모바일 반응형 (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  /* 레이아웃 구조 */
+  .reservation-system {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* flex/grid 기본 min-width:auto 때문에 발생하는 오버플로우 체인 차단 */
+  .admin-main,
+  .admin-content,
+  .admin-calendar-wrapper,
+  .admin-calendar-container,
+  .month-grid,
+  .month-cell,
+  .month-cell-header {
+    min-width: 0;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    z-index: 200;
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-overlay.open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-header {
+    padding: 0 1rem;
+    height: 60px;
+    min-height: 60px;
+  }
+  
+  .header-title h2 { font-size: 1.1rem; }
+
+  .admin-content {
+    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 대시보드 */
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* 테이블 */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+  }
+  
+  .data-table { min-width: 600px; }
+
+  /* 캘린더 */
+  .admin-calendar-wrapper {
+    flex-direction: column !important;
+    height: auto;
+    gap: 1rem;
+    overflow-x: hidden; /* 가로 스크롤 방지 */
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .admin-calendar-container { height: auto; min-height: 400px; width: 100%; min-width: 0; }
+  
+  .month-grid { 
+    min-height: auto;
+    /* Grid 깨짐 방지: 1fr 대신 minmax(0, 1fr) 사용 및 width 100% 명시 */
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr)); 
+    grid-template-rows: 30px repeat(5, minmax(50px, auto));
+    border-right: none;
+    width: 100%;
+    max-width: 100%; /* 100vw는 부모 패딩 때문에 오버플로우 유발 */
+    box-sizing: border-box; /* 패딩 포함 계산 */
+    overflow: hidden; /* 그리드 밖으로 내용이 튀는 것 방지 */
+    /* 모바일에서 sub-pixel gap 깨짐 방지: gap 제거하고 셀에 border 부여 */
+    gap: 0;
+    background: transparent;
+    border: none;
+  }
+  
+  .month-cell-header {
+    border: 1px solid var(--admin-border);
+    border-left: none;
+  }
+  .month-cell-header:first-child {
+    border-left: 1px solid var(--admin-border);
+  }
+
+  .month-cell { 
+    min-height: 50px; 
+    padding: 2px;
+    overflow: hidden; /* 내용 넘침 방지 */
+    border: 1px solid var(--admin-border);
+    border-top: none;
+    border-left: none;
+  }
+
+  /* 첫번째 컬럼은 좌측 테두리 살리기 */
+  .month-cell:nth-child(7n + 1) {
+    border-left: 1px solid var(--admin-border);
+  }
+
+  .date-label { font-size: 0.8rem; }
+  
+  /* 모바일에서 캘린더 내용 간소화 */
+  .res-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+    height: 16px;
+    overflow: hidden;
+  }
+  
+  .res-badge span { display: none; } /* 시간 숨김 */
+
+
+  .schedule-panel {
+    width: 100%;
+    margin-top: 0;
+    height: auto;
+    max-height: 500px;
+  }
+
+  /* 테마 설정 */
+  .themes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 모달 */
+  .modal-overlay { z-index: 1000; padding: 1rem; align-items: flex-end; }
+  .modal-content {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-body { overflow-y: auto; flex: 1; }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .image-upload-box { aspect-ratio: 16/9; }
+}

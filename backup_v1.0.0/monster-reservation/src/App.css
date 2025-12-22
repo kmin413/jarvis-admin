@@ -1,0 +1,50 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-header {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  align-items: center;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+}
+
+.logo-icon {
+  stroke-width: 2.5px;
+}
+
+.logo-text {
+  font-family: 'Montserrat', sans-serif; /* 고급스러운 폰트 느낌 */
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #1e293b;
+  text-transform: uppercase;
+}
+
+/* 기존 스타일 유지하면서 불필요한 부분 제거 */
+main {
+  flex: 1;
+  background: var(--background);
+}
+
+
