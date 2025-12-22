@@ -40,12 +40,19 @@ interface ThemeDetailData {
   reviewCount: number;
 }
 
+const LOCAL_IMAGES = [
+  '/images/theme1.jpg', '/images/theme2.jpg', '/images/theme3.jpg', '/images/theme4.jpg',
+  '/images/theme5.jpg', '/images/theme6.png', '/images/theme7.png', '/images/theme8.jpg',
+  '/images/theme9.png', '/images/theme10.png', '/images/theme11.png', '/images/theme12.png',
+  '/images/theme13.png', '/images/theme14.png', '/images/theme15.png', '/images/theme16.png',
+  '/images/theme17.jpg', '/images/theme18.png', '/images/theme19.png', '/images/theme20.png',
+  '/images/theme21.png', '/images/theme22.png', '/images/theme23.png', '/images/theme24.png'
+];
+
+const getRandomImage = (index: number) => LOCAL_IMAGES[index % LOCAL_IMAGES.length];
+
 const EXAMPLE_GALLERY_IMAGES = [
-  'https://picsum.photos/seed/ogam1/1200/900',
-  'https://picsum.photos/seed/ogam2/1200/900',
-  'https://picsum.photos/seed/ogam3/1200/900',
-  'https://picsum.photos/seed/ogam4/1200/900',
-  'https://picsum.photos/seed/ogam5/1200/900',
+  LOCAL_IMAGES[0], LOCAL_IMAGES[1], LOCAL_IMAGES[2], LOCAL_IMAGES[3], LOCAL_IMAGES[4]
 ]
 
 // 더미 데이터 생성기
@@ -117,7 +124,13 @@ export default function ReservationPage() {
   const galleryRef = useRef<HTMLDivElement | null>(null)
   
   const currentThemeData = selectedTheme ? getThemeDetail(selectedTheme) : null
-  const galleryImages = EXAMPLE_GALLERY_IMAGES
+  const galleryImages = [
+    getRandomImage(selectedTheme ? THEMES.indexOf(selectedTheme) : 0),
+    getRandomImage(selectedTheme ? THEMES.indexOf(selectedTheme) + 1 : 1),
+    getRandomImage(selectedTheme ? THEMES.indexOf(selectedTheme) + 2 : 2),
+    getRandomImage(selectedTheme ? THEMES.indexOf(selectedTheme) + 3 : 3),
+    getRandomImage(selectedTheme ? THEMES.indexOf(selectedTheme) + 4 : 4),
+  ]
 
   const timeSlots = ['10:00', '11:00', '13:00', '14:00', '15:30', '17:00']
 
@@ -213,7 +226,9 @@ export default function ReservationPage() {
                     <div className="theme-gallery-grid">
                       {THEMES.map((theme, idx) => (
                         <div key={idx} className="gallery-card" onClick={() => handleThemeSelect(theme)}>
-                          <div className="gallery-card-image" />
+                          <div className="gallery-card-image">
+                            <img src={getRandomImage(idx)} alt={theme} style={{width:'100%', height:'100%', objectFit:'cover', borderRadius:'8px'}} />
+                          </div>
                           <div className="gallery-card-info">
                             <h3 className="gallery-card-title">체험 프로그램: {theme}</h3>
                             <p className="gallery-card-location">서울, 대한민국</p>
