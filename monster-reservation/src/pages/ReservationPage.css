@@ -1163,7 +1163,20 @@
   }
 
   /* 반응형 그리드 뷰 조정 */
+  .theme-gallery-container {
+    padding: 1rem; /* 모바일에서 여백 축소 */
+  }
+
   .theme-gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
+    /* 화면 크기에 따라 자동으로 열 개수 조정 (최소 160px) */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* 초소형 모바일 (iPhone SE 등) 대응 */
+@media (max-width: 380px) {
+  .theme-gallery-grid {
+    grid-template-columns: 1fr; /* 1열로 표시 */
   }
 }
