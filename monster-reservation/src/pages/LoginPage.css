@@ -1,0 +1,195 @@
+/* 오감몬스터 로그인/회원가입 페이지 */
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 20%, #f7eaff 0%, #fff 60%);
+  padding: 32px 16px;
+  font-family: 'Nanum Gothic', system-ui, sans-serif;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(124, 58, 237, 0.18);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-hero {
+  text-align: center;
+}
+
+.login-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.logo-icon {
+  font-size: 40px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.logo-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #5b21b6;
+  letter-spacing: -0.5px;
+}
+
+.logo-sub {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.login-tag {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 6px 0 0;
+}
+
+.tab-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.tab {
+  border: 0;
+  background: transparent;
+  padding: 10px 14px;
+  border-radius: 9px;
+  font-weight: 700;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-size: 14px;
+}
+
+.tab.active {
+  background: #fff;
+  color: #5b21b6;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-form label span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.login-form input {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  outline: none;
+  background: #fff;
+}
+
+.login-form input:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.32);
+  font-family: inherit;
+}
+
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(124, 58, 237, 0.4);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.alert {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.alert-success {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.hint {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 4px 0 0;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.footer-links {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.footer-links a {
+  color: #7c3aed;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+  .logo-title {
+    font-size: 20px;
+  }
+}

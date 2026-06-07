@@ -1,0 +1,194 @@
+/* 내 예약 모달 */
+.myres-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  font-family: 'Nanum Gothic', system-ui, sans-serif;
+}
+.myres-modal {
+  background: #fff;
+  border-radius: 22px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+.myres-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px 12px;
+  background: linear-gradient(135deg, #faf5ff 0%, #fff 100%);
+  border-bottom: 1px solid #f3f4f6;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+}
+.myres-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #5b21b6;
+  margin-bottom: 2px;
+}
+.myres-sub {
+  font-size: 12px;
+  color: #6b7280;
+}
+.myres-close {
+  background: transparent;
+  border: 0;
+  font-size: 22px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.myres-error {
+  margin: 12px 24px 0;
+  padding: 10px 14px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border-radius: 10px;
+  font-size: 13px;
+  border: 1px solid #fecaca;
+}
+
+.myres-body {
+  flex: 1;
+  overflow: auto;
+  padding: 16px 24px 24px;
+}
+
+.myres-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+}
+.myres-empty .emoji { font-size: 44px; margin-bottom: 8px; }
+.myres-empty .ttl { font-size: 16px; font-weight: 700; color: #4b5563; margin-bottom: 6px; }
+.myres-empty .desc { font-size: 13px; }
+
+.myres-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.myres-card {
+  background: #fff;
+  border: 1.5px solid #f3f4f6;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.myres-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.myres-card-id {
+  font-size: 12px;
+  font-weight: 800;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+.myres-status {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.myres-card-theme {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.myres-emoji { font-size: 22px; }
+.myres-theme-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.myres-card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 13px;
+}
+.myres-card-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.myres-card-meta .key {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 700;
+}
+.myres-card-meta .val {
+  font-size: 13px;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.myres-note,
+.myres-memo {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.myres-note {
+  background: #fffbeb;
+  color: #92400e;
+  border-left: 3px solid #f59e0b;
+}
+.myres-memo {
+  background: #faf5ff;
+  color: #5b21b6;
+  border-left: 3px solid #a855f7;
+}
+
+.myres-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+.myres-cancel-btn {
+  background: #fff;
+  border: 1.5px solid #fecaca;
+  color: #b91c1c;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.myres-cancel-btn:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #b91c1c;
+}
+.myres-cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .myres-card-meta { grid-template-columns: 1fr; }
+  .myres-modal { border-radius: 16px; max-height: 95vh; }
+}

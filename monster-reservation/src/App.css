@@ -1,50 +1,29 @@
-.app-container {
+/* App 스타일은 ReservationPage.css가 대부분 담당합니다. */
+
+.boot-screen {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 20%, #f7eaff 0%, #fff 60%);
+  font-family: 'Nanum Gothic', system-ui, sans-serif;
 }
 
-.main-header {
-  background: white;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.boot-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #e9d5ff;
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: boot-spin 0.9s linear infinite;
+  margin-bottom: 14px;
 }
 
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 1.5rem;
-  display: flex;
-  justify-content: center; /* 중앙 정렬 */
-  align-items: center;
+.boot-text {
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
 }
 
-.logo-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--primary);
+@keyframes boot-spin {
+  to { transform: rotate(360deg); }
 }
-
-.logo-icon {
-  stroke-width: 2.5px;
-}
-
-.logo-text {
-  font-family: 'Montserrat', sans-serif; /* 고급스러운 폰트 느낌 */
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #1e293b;
-  text-transform: uppercase;
-}
-
-/* 기존 스타일 유지하면서 불필요한 부분 제거 */
-main {
-  flex: 1;
-  background: var(--background);
-}
-
-

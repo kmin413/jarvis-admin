@@ -23,3 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+
+# Python venv / cache (오감몬스터 backend)
+backend/.venv/
+backend/__pycache__/
+backend/*.pyc
+backend/data.db
+backend/logs/
